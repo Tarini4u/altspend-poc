@@ -6,6 +6,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AltSpend — True No-Cost EMI Optimizer</title>
 
+    <!-- Browser Tab Favicon Asset Link from image_0bfcd9.png -->
+    <link rel="icon" type="image/x-icon" href="./public/favicon.ico">
+
     <!-- Tailwind CSS Platform Engine -->
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -15,7 +18,6 @@
             font-family: 'Plus Jakarta Sans', sans-serif;
         }
 
-        /* Custom smooth scroll and background treatments mimicking the matte black logo texture */
         .matte-dark {
             background-color: #0b0f19;
         }
@@ -27,11 +29,9 @@
     <!-- Sticky Mobile-Optimized Top Navigation Header Bar -->
     <header class="sticky top-0 z-50 backdrop-blur-md bg-[#0b0f19]/80 border-b border-slate-800/80 px-4 py-4 sm:px-8">
         <div class="max-w-6xl mx-auto flex justify-between items-center">
-            <!-- Brand Mark integrating both structural logo identities -->
+            <!-- Brand Mark integrating both structural logo identities from image_0bfcd9.png -->
             <div class="flex items-center gap-3">
-                <div class="h-9 w-9 rounded-xl bg-slate-900 border border-slate-700 flex items-center justify-center font-black text-transparent bg-clip-text bg-gradient-to-tr from-violet-500 via-cyan-400 to-lime-400 shadow-md shadow-lime-500/10">
-                    A
-                </div>
+                <img src="./public/logo-laser.png" alt="AltSpend Logo Mark" class="h-9 w-9 object-contain rounded-xl shadow-md shadow-lime-500/10">
                 <span class="text-xl font-extrabold tracking-tight text-white sm:text-2xl">
                     AltSpend<span class="text-transparent bg-clip-text bg-gradient-to-r from-lime-400 to-emerald-400">.com</span>
                 </span>
@@ -66,10 +66,10 @@
                 </p>
             </div>
 
-            <!-- Download extension banner shortcut link -->
+            <!-- Download extension banner shortcut link incorporating logo-ribbon.png from image_0bfcd9.png -->
             <div class="p-4 rounded-2xl bg-slate-900/60 border border-slate-800 flex items-center justify-between gap-3">
                 <div class="flex items-center gap-3">
-                    <span class="text-2xl">🧩</span>
+                    <img src="./public/logo-ribbon.png" alt="AltSpend Extension Badge" class="h-9 w-9 object-contain">
                     <div>
                         <h4 class="text-xs font-bold text-white">AltSpend Chrome Extension</h4>
                         <p class="text-[11px] text-slate-400">Audit pricing options right on checkout pages automatically.</p>
@@ -105,10 +105,9 @@
             </div>
         </div>
 
-        <!-- Right Side Column Block: Interactive Live Link Scraper Input Frame & Dynamic API Response Visualizer Panel -->
+        <!-- Right Side Column Block: Interactive Live Link Scraper Input Frame -->
         <div class="lg:col-span-7 w-full bg-slate-900/40 border border-slate-800 p-4 sm:p-6 rounded-3xl backdrop-blur-sm shadow-xl space-y-6">
 
-            <!-- Real-Time URL Audit Entry Form Element Block -->
             <div class="space-y-2">
                 <label class="block text-xs uppercase tracking-wider text-lime-400 font-bold">Product Link Analyzer Gateway</label>
                 <div class="flex flex-col sm:flex-row gap-2">
@@ -119,10 +118,8 @@
                 </div>
             </div>
 
-            <!-- Dynamic UI Target Output Section Matrix Window Area -->
             <div id="apiResultWrapper" class="relative min-h-[250px] bg-slate-950 border border-slate-800/80 rounded-2xl p-4 sm:p-6 flex flex-col justify-center">
 
-                <!-- Initial Empty Slate Form Instruction Banner Template -->
                 <div id="stateEmpty" class="text-center py-8 space-y-3">
                     <div class="mx-auto w-12 h-12 rounded-full bg-slate-900 border border-slate-800 flex items-center justify-center text-xl shadow-inner">🔍</div>
                     <div class="space-y-1">
@@ -131,7 +128,6 @@
                     </div>
                 </div>
 
-                <!-- Async Platform Loading Tracker Animation State Shell Container Box -->
                 <div id="stateLoading" class="hidden text-center py-12 space-y-4">
                     <div class="mx-auto w-10 h-10 border-4 border-lime-400/20 border-t-lime-400 rounded-full animate-spin"></div>
                     <div class="space-y-1">
@@ -140,9 +136,7 @@
                     </div>
                 </div>
 
-                <!-- Core Formatted API Response Component Card Output Node Architecture -->
                 <div id="stateData" class="hidden space-y-6">
-                    <!-- Target Identity Info Banner Block -->
                     <div class="border-b border-slate-800 pb-4 flex flex-col sm:flex-row sm:justify-between sm:items-center gap-2">
                         <div>
                             <span class="text-[10px] uppercase font-bold tracking-wider px-2 py-0.5 rounded bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">Audit Complete</span>
@@ -154,10 +148,8 @@
                         </div>
                     </div>
 
-                    <!-- Horizontal Grid Card Option List Flex Layout Mapping Box -->
                     <div class="space-y-3">
                         <h4 class="text-xs font-bold text-slate-400 uppercase tracking-wide">Available Bank Financing Breakdown Schedules</h4>
-                        <!-- Dynamic Node List Container Insertion Block -->
                         <div id="emiCardsContainer" class="grid grid-cols-1 sm:grid-cols-2 gap-3">
                             <!-- Injected card component nodes settle here dynamically -->
                         </div>
@@ -168,7 +160,7 @@
         </div>
     </main>
 
-    <!-- Phase 4 Interactive Context Auth Modal Shell Element Core Overlay Box -->
+    <!-- Authorization Screen Modal Overlay Area -->
     <div id="authModal" class="fixed inset-0 z-50 hidden items-center justify-center bg-black/80 backdrop-blur-sm p-4 animate-fade-in">
         <div class="bg-slate-900 border border-slate-800 max-w-sm w-full rounded-3xl p-6 relative shadow-2xl space-y-4">
             <button onclick="toggleAuthModal()" class="absolute top-4 right-4 text-slate-500 hover:text-white font-bold text-sm">✕</button>
@@ -183,21 +175,17 @@
         </div>
     </div>
 
-    <!-- Persistent Trust Footprint Legal Bottom Layer Tag Line Bar -->
     <footer class="max-w-6xl mx-auto px-4 py-8 sm:px-8 border-t border-slate-900 text-center text-[11px] text-slate-600">
         &copy; 2026 AltSpend Engines. Localized parsing calculation schemas. No user credit information tracked.
     </footer>
 
-    <!-- Interactive Execution Gateway & Response Orchestration JavaScript Code Block Engine -->
     <script>
-        // Toggle helper managing authorization screen visual state visibility masks
         function toggleAuthModal() {
             const modal = document.getElementById('authModal');
             modal.classList.toggle('hidden');
             modal.classList.toggle('flex');
         }
 
-        // Action Core Handler triggering the asynchronous connection pipeline to the FastAPI server context environment backend
         async function triggerUrlAudit() {
             const urlInput = document.getElementById('productUrlInput').value.trim();
             if (!urlInput) {
@@ -205,19 +193,16 @@
                 return;
             }
 
-            // Target references fetching DOM node anchors for visibility layout configurations
             const stateEmpty = document.getElementById('stateEmpty');
             const stateLoading = document.getElementById('stateLoading');
             const stateData = document.getElementById('stateData');
             const emiCardsContainer = document.getElementById('emiCardsContainer');
 
-            // Switch presentation modes immediately to state loading spinner indicator
             stateEmpty.classList.add('hidden');
             stateData.classList.add('hidden');
             stateLoading.classList.remove('hidden');
 
             try {
-                // Network pipeline linking frontend browser inputs to your local system FastAPI engine port endpoint target structure
                 const response = await fetch('http://127.0.0.1:8000/api/v1/audit', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
@@ -228,16 +213,11 @@
                 const payload = await response.json();
 
                 if (payload.success && payload.audited_emi_options && payload.audited_emi_options.length > 0) {
-                    // Inject tracked parent metadata numbers into placeholder field contexts
                     document.getElementById('metaStickerPrice').innerText = `₹${payload.sticker_price.toLocaleString('en-IN')}`;
-
-                    // Clear out previously existing component layout traces inside child tree channels
                     emiCardsContainer.innerHTML = '';
 
-                    // 1. Find the absolute lowest premium plan to recommend it dynamically
                     const lowestPremium = Math.min(...payload.audited_emi_options.map(o => o.real_premium_over_sticker));
 
-                    // Loop through data payload list structure parsed out of the scraper execution thread response block
                     payload.audited_emi_options.forEach(option => {
                         const incomeVal = parseFloat(document.getElementById('userIncome').value) || 0;
                         const activeEmiVal = parseFloat(document.getElementById('userCurrentEmi').value) || 0;
@@ -253,12 +233,9 @@
                             }
                         }
 
-                        // Check if this specific card is the absolute cheapest net deal
                         const isBestDeal = option.real_premium_over_sticker === lowestPremium;
                         const borderStyle = isBestDeal ? "border-lime-500/50 bg-slate-900/90 shadow-lime-950/20 shadow-md" : "border-slate-800 bg-slate-900";
                         const bestDealBadge = isBestDeal ? `<span class="text-[9px] bg-lime-400 text-slate-950 font-extrabold px-1.5 py-0.5 rounded shadow-sm">★ OPTIMAL DEAL</span>` : '';
-
-                        // Calculate a rough approximation of Bank IRR if not supplied directly by backend
                         const approximateIrr = option.bank.includes("HDFC") ? "16% p.a." : "13.5% p.a.";
 
                         const cardElement = document.createElement('div');
@@ -290,7 +267,6 @@
                         emiCardsContainer.appendChild(cardElement);
                     });
 
-                    // Gracefully hide loading layers and reveal newly built dashboard visual metrics matrices
                     stateLoading.classList.add('hidden');
                     stateData.classList.remove('hidden');
                 } else {
@@ -304,7 +280,6 @@
             }
         }
 
-        // Local state cleanup fallback helper script routing resets
         function resetInterfaceState() {
             document.getElementById('stateLoading').classList.add('hidden');
             document.getElementById('stateData').classList.add('hidden');
