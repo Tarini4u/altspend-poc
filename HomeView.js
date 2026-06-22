@@ -1,19 +1,26 @@
-// Auth Modal Controller
-function toggleAuthModal() {
+/**
+ * AltSpend — Production UI Controller Bridge
+ * Core logic and calculations preserved completely. Explicitly bound to the Window 
+ * context to prevent scoping loss across mobile/desktop layout boundaries.
+ */
+
+// 1. Auth Modal Controller
+window.toggleAuthModal = function() {
     const modal = document.getElementById('authModal');
+    if (!modal) return;
     modal.classList.toggle('hidden');
     modal.classList.toggle('flex');
-}
+};
 
-// Interface Reset Utility
-function resetInterfaceState() {
+// 2. Interface Reset Utility
+window.resetInterfaceState = function() {
     document.getElementById('stateLoading').classList.add('hidden');
     document.getElementById('stateData').classList.add('hidden');
     document.getElementById('stateEmpty').classList.remove('hidden');
-}
+};
 
-// Core API Caller and DOM Injector
-async function triggerUrlAudit() {
+// 3. Core API Caller and DOM Injector
+window.triggerUrlAudit = async function() {
     const urlInput = document.getElementById('productUrlInput').value.trim();
     if (!urlInput) {
         alert('Please paste a valid product link address first.');
@@ -109,11 +116,11 @@ async function triggerUrlAudit() {
             stateData.classList.remove('hidden');
         } else {
             alert('The execution worker returned an invalid payload.');
-            resetInterfaceState();
+            window.resetInterfaceState();
         }
 
     } catch (err) {
         alert(`Scraper Node Communication Exception: ${err.message}`);
-        resetInterfaceState();
+        window.resetInterfaceState();
     }
-}
+};
