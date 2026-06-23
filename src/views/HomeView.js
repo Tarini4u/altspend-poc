@@ -1,10 +1,35 @@
 /**
  * AltSpend — Production UI Controller Bridge
- * Core logic and calculations preserved completely. Explicitly bound to the Window 
- * context to prevent scoping loss across mobile/desktop layout boundaries.
  */
 
-// 1. Auth Modal Controller
+// Core Global Framework Intermediary Scopes Setup Context
+window.activeLoadingInterval = null;
+window.cachedEmiOptions = [];
+window.currentProductUrl = "";
+
+// Dynamic Campaign Ticker Array Phrases Row Hook Configuration
+const campaignAlerts = [
+    "Amazon Prime Day starts in 2 Days! Check your EMI options now.",
+    "Flipkart Big Billion Days approaching! Uncover hidden interest rates early.",
+    "Festive offers arriving shortly. Optimize your dynamic card reward metrics!"
+];
+let currentCampaignIndex = 0;
+
+// Initialize layout elements on view engine boot script step
+document.addEventListener("DOMContentLoaded", () => {
+    //document.getElementById('globalHeader').innerHTML = window.HeaderComponent.render();
+    document.getElementById('financeFormContainer').innerHTML = window.FinanceFormComponent.render();
+    
+    // Begin background interval banner cycler function routing
+    setInterval(() => {
+        const banner = document.getElementById('campaignMessage');
+        if(banner) {
+            currentCampaignIndex = (currentCampaignIndex + 1) % campaignAlerts.length;
+            banner.innerText = campaignAlerts[currentCampaignIndex];
+        }
+    }, 6000);
+});
+
 window.toggleAuthModal = function() {
     const modal = document.getElementById('authModal');
     if (!modal) return;
@@ -12,14 +37,36 @@ window.toggleAuthModal = function() {
     modal.classList.toggle('flex');
 };
 
-// 2. Interface Reset Utility
 window.resetInterfaceState = function() {
+    if (window.activeLoadingInterval) {
+        clearInterval(window.activeLoadingInterval);
+        window.activeLoadingInterval = null;
+    }
     document.getElementById('stateLoading').classList.add('hidden');
     document.getElementById('stateData').classList.add('hidden');
     document.getElementById('stateEmpty').classList.remove('hidden');
 };
 
-// 3. Core API Caller and DOM Injector
+// Point 3: Status micro-string message rotator function step loop logic
+function runBufferingMessageLoop() {
+    const steps = [
+        { h: "Connecting to Marketplace...", s: "Reading structural price parameters..." },
+        { h: "Scraping Listing Elements...", s: "Extracting checkout matrix indices..." },
+        { h: "Parsing Live Vendor Tables...", s: "Isolating upfront merchant cashbacks..." },
+        { h: "Compounding Local GST Layouts...", s: "Exposing hidden bank interest calculations..." },
+        { h: "Finalizing Optimal Options...", s: "Arranging lowest out-of-pocket metrics..." }
+    ];
+    let index = 0;
+    const hNode = document.getElementById('loadingHeader');
+    const sNode = document.getElementById('loadingSubtext');
+
+    window.activeLoadingInterval = setInterval(() => {
+        index = (index + 1) % steps.length;
+        if(hNode) hNode.innerText = steps[index].h;
+        if(sNode) sNode.innerText = steps[index].s;
+    }, 1500);
+}
+
 window.triggerUrlAudit = async function() {
     const urlInput = document.getElementById('productUrlInput').value.trim();
     if (!urlInput) {
@@ -27,35 +74,33 @@ window.triggerUrlAudit = async function() {
         return;
     }
 
-    const stateEmpty = document.getElementById('stateEmpty');
-    const stateLoading = document.getElementById('stateLoading');
-    const stateData = document.getElementById('stateData');
+    window.currentProductUrl = urlInput;
     const emiCardsContainer = document.getElementById('emiCardsContainer');
 
-    stateEmpty.classList.add('hidden');
-    stateData.classList.add('hidden');
-    stateLoading.classList.remove('hidden');
+    document.getElementById('stateEmpty').classList.add('hidden');
+    document.getElementById('stateData').classList.add('hidden');
+    document.getElementById('stateLoading').classList.remove('hidden');
+
+    runBufferingMessageLoop();
 
     try {
-        const response = await fetch('https://altspend-backend.onrender.com/api/v1/audit', {
-            method: 'POST',
-            headers: { 
-                'accept': 'application/json',
-                'Content-Type': 'application/json' 
-            },
-            body: JSON.stringify({ url: urlInput })
-        });
+        // Run decoupled API infrastructure service layer logic function
+        const payload = await window.ApiService.fetchAudit(urlInput);
 
-        if (!response.ok) throw new Error(`API Transaction Failed (Status: ${response.status})`);
-        const payload = await response.json();
+        if (window.activeLoadingInterval) clearInterval(window.activeLoadingInterval);
 
         if (payload.success && payload.audited_emi_options && payload.audited_emi_options.length > 0) {
-            document.getElementById('metaStickerPrice').innerText = `₹${payload.sticker_price.toLocaleString('en-IN')}`;
-            emiCardsContainer.innerHTML = '';
+            window.cachedEmiOptions = payload.audited_emi_options;
 
+            // Point 4: Directly update scraped imagery and item name text nodes
+            document.getElementById('metaStickerPrice').innerText = `₹${payload.sticker_price.toLocaleString('en-IN')}`;
+            document.getElementById('metaProductName').innerText = payload.product_title || "Marketplace Product Item Block";
+            document.getElementById('metaProductPhoto').src = payload.product_image || "https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=120";
+
+            emiCardsContainer.innerHTML = '';
             const lowestPremium = Math.min(...payload.audited_emi_options.map(o => o.real_premium_over_sticker));
 
-            payload.audited_emi_options.forEach(option => {
+            payload.audited_emi_options.forEach((option, index) => {
                 const incomeVal = parseFloat(document.getElementById('userIncome').value) || 0;
                 const activeEmiVal = parseFloat(document.getElementById('userCurrentEmi').value) || 0;
 
@@ -63,64 +108,69 @@ window.triggerUrlAudit = async function() {
                 if (incomeVal > 0) {
                     const combinedCommitment = activeEmiVal + option.nominal_monthly_emi;
                     const dtiRatio = (combinedCommitment / incomeVal) * 100;
-                    if (dtiRatio > 35) {
-                        safetyBadgeHtml = `<span class="text-[10px] bg-rose-100 text-rose-700 border border-rose-200 px-1.5 py-0.5 rounded font-bold">⚠️ DTI: ${dtiRatio.toFixed(0)}%</span>`;
-                    } else {
-                        safetyBadgeHtml = `<span class="text-[10px] bg-emerald-100 text-emerald-700 border border-emerald-200 px-1.5 py-0.5 rounded font-bold">✓ Safe</span>`;
-                    }
+                    safetyBadgeHtml = dtiRatio > 35 
+                        ? `<span class="text-[9px] bg-rose-100 text-rose-700 border border-rose-200 px-1.5 py-0.5 rounded font-black">⚠️ DTI RISK</span>`
+                        : `<span class="text-[9px] bg-emerald-100 text-emerald-700 border border-emerald-200 px-1.5 py-0.5 rounded font-black">✓ SAFE RATE</span>`;
                 }
 
-                // Light Mode E-commerce Card UI logic
                 const isBestDeal = option.real_premium_over_sticker === lowestPremium;
-                const borderStyle = isBestDeal 
-                    ? "border-emerald-400 bg-emerald-50/30 shadow-md shadow-emerald-100" 
-                    : "border-slate-200 bg-white";
                 
-                const bestDealBadge = isBestDeal 
-                    ? `<span class="text-[9px] bg-emerald-500 text-white font-black px-1.5 py-0.5 rounded shadow-sm">★ OPTIMAL</span>` 
-                    : '';
-                const approximateIrr = option.bank.includes("HDFC") ? "16% p.a." : "13.5% p.a.";
-
-                const cardElement = document.createElement('div');
-                cardElement.className = `${borderStyle} border rounded-xl p-4 flex flex-col justify-between space-y-3 transition-all`;
-                cardElement.innerHTML = `
-                    <div class="flex justify-between items-start">
-                        <div>
-                            <div class="flex items-center gap-1.5 mb-1">
-                                <h5 class="text-sm font-black text-slate-900">${option.bank}</h5>
-                                ${bestDealBadge}
-                            </div>
-                            <p class="text-[11px] font-bold text-slate-600">${option.tenure_months}-Month Strategy <span class="text-slate-400">@ ${approximateIrr}</span></p>
-                        </div>
-                        <div class="flex flex-col items-end gap-1.5">
-                            <p class="text-sm font-black text-blue-600">₹${Math.round(option.nominal_monthly_emi).toLocaleString('en-IN')}<span class="text-[10px] text-slate-500 font-medium">/mo</span></p>
-                            ${safetyBadgeHtml}
-                        </div>
-                    </div>
-                    
-                    <div class="border-t border-slate-100 pt-3 space-y-1.5 text-[11px] font-medium">
-                        <div class="flex justify-between"><span class="text-slate-500">Upfront Discount:</span><span class="text-emerald-600 font-bold">-₹${Math.round(Math.abs(option.upfront_marketplace_discount)).toLocaleString('en-IN')}</span></div>
-                        <div class="flex justify-between"><span class="text-slate-500">Hidden Interest GST:</span><span class="text-rose-500">+₹${Math.round(option.hidden_bank_interest_gst).toLocaleString('en-IN')}</span></div>
-                        <div class="flex justify-between"><span class="text-slate-500">Processing Fee:</span><span class="text-rose-500">+₹${Math.round(option.processing_fee_inclusive_gst).toLocaleString('en-IN')}</span></div>
-                        <div class="flex justify-between border-t border-slate-100 mt-2 pt-2"><span class="text-slate-700 font-bold">Net Out-Of-Pocket:</span><span class="text-slate-900 font-black">₹${Math.round(option.true_net_out_of_pocket).toLocaleString('en-IN')}</span></div>
-                    </div>
-                    
-                    <div class="text-[10px] ${isBestDeal ? 'bg-emerald-100 border-emerald-200 text-emerald-800' : 'bg-slate-50 border-slate-200 text-slate-600'} px-2 py-2 rounded text-center font-bold border mt-1">
-                        Real Premium Over Sticker: <span>₹${Math.round(option.real_premium_over_sticker).toLocaleString('en-IN')}</span>
-                    </div>
-                `;
-                emiCardsContainer.appendChild(cardElement);
+                // Inject via modular list component architecture layout frame string definition block
+                const rowHtml = window.AuditCardComponent.renderRow(option, index, isBestDeal, safetyBadgeHtml);
+                emiCardsContainer.insertAdjacentHTML('beforeend', rowHtml);
             });
 
-            stateLoading.classList.add('hidden');
-            stateData.classList.remove('hidden');
+            document.getElementById('stateLoading').classList.add('hidden');
+            document.getElementById('stateData').classList.remove('hidden');
         } else {
             alert('The execution worker returned an invalid payload.');
             window.resetInterfaceState();
         }
-
     } catch (err) {
         alert(`Scraper Node Communication Exception: ${err.message}`);
         window.resetInterfaceState();
+    }
+};
+
+// Point 7: Modal pop-up initialization and parameter parsing method setup
+window.openPricingProfile = function(index) {
+    const option = window.cachedEmiOptions[index];
+    if(!option) return;
+
+    document.getElementById('popBankName').innerText = `${option.bank} Smart Calculations`;
+    document.getElementById('popStrategy').innerText = `${option.tenure_months}-Month Strategy Terms Profile Configuration`;
+
+    const breakdownHtml = `
+        <div class="flex justify-between border-b border-slate-200/60 pb-1.5"><span class="text-slate-500">Stated Monthly EMI:</span><span class="text-slate-900 font-bold">₹${Math.round(option.nominal_monthly_emi).toLocaleString('en-IN')}/mo</span></div>
+        <div class="flex justify-between border-b border-slate-200/60 pb-1.5"><span class="text-slate-500">Upfront Merchant Discount:</span><span class="text-emerald-600 font-bold">-₹${Math.round(Math.abs(option.upfront_marketplace_discount)).toLocaleString('en-IN')}</span></div>
+        <div class="flex justify-between border-b border-slate-200/60 pb-1.5"><span class="text-slate-500">Hidden Interest GST:</span><span class="text-rose-500 font-bold">+₹${Math.round(option.hidden_bank_interest_gst).toLocaleString('en-IN')}</span></div>
+        <div class="flex justify-between border-b border-slate-200/60 pb-1.5"><span class="text-slate-500">Processing Fee (with GST):</span><span class="text-rose-500 font-bold">+₹${Math.round(option.processing_fee_inclusive_gst).toLocaleString('en-IN')}</span></div>
+        <div class="flex justify-between border-b border-slate-200/60 pb-1.5 bg-blue-50/50 p-1 rounded"><span class="text-slate-800 font-bold">Net Out-Of-Pocket:</span><span class="text-slate-900 font-black">₹${Math.round(option.true_net_out_of_pocket).toLocaleString('en-IN')}</span></div>
+        <div class="flex justify-between pt-1"><span class="text-slate-600 font-bold">Real Extra Premium Over Sticker:</span><span class="text-orange-600 font-black">₹${Math.round(option.real_premium_over_sticker).toLocaleString('en-IN')}</span></div>
+    `;
+    document.getElementById('popBreakdownContent').innerHTML = breakdownHtml;
+
+    const platform = window.currentProductUrl.includes('flipkart') ? 'Flipkart' : 'Amazon';
+    const affiliateUrl = `https://www.anrdoezrs.net/click?sid=altspend-affiliate&url=${encodeURIComponent(window.currentProductUrl)}`;
+    const bankUrl = `https://www.cardexpert.in/apply-${option.bank.toLowerCase().split(' ')[0]}-credit-card/`;
+
+    const buyBtn = document.getElementById('affiliateBuyBtn');
+    buyBtn.href = affiliateUrl;
+    buyBtn.innerText = `🛒 Buy on ${platform}`;
+    
+    const bankBtn = document.getElementById('bankApplyCardBtn');
+    bankBtn.href = bankUrl;
+    bankBtn.innerText = `💳 Apply for ${option.bank.split(' ')[0]} Card`;
+
+    const modal = document.getElementById('pricingModal');
+    modal.classList.remove('hidden');
+    modal.classList.add('flex');
+};
+
+window.closePricingModal = function() {
+    const modal = document.getElementById('pricingModal');
+    if(modal) {
+        modal.classList.remove('flex');
+        modal.classList.add('hidden');
     }
 };
