@@ -7,15 +7,40 @@
     <title>AltSpend — True No-Cost EMI Optimizer</title>
 
     <link rel="icon" type="image/x-icon" href="./public/favicon.ico">
-    
+
     <script src="https://cdn.tailwindcss.com"></script>
-    
+
     <link rel="stylesheet" href="./src/assets/css/global.css">
 </head>
 
 <body class="bg-slate-50 text-slate-900 min-h-screen antialiased selection:bg-blue-200 selection:text-blue-900">
 
-    <header class="sticky top-0 z-50 backdrop-blur-md bg-white/90 border-b border-slate-200 px-4 py-4 sm:px-8 shadow-sm">
+    <!-- REQUIREMENT 1: Mobile App Download Smart Notification/Banner (Onload App Prompt) -->
+    <div id="mobileAppBanner"
+        class="hidden bg-gradient-to-r from-blue-700 to-indigo-800 text-white px-4 py-3 shadow-lg relative transition-all duration-300 z-50">
+        <div class="max-w-6xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-2.5">
+            <div class="flex items-center gap-3">
+                <div class="bg-white/10 p-1.5 rounded-lg text-xl">📱</div>
+                <div>
+                    <p class="text-xs font-black tracking-wide">GET THE ALTSPEND MOBILE APP</p>
+                    <p class="text-[11px] text-blue-100 font-medium">Audit checkout links instantly from your share
+                        sheet.</p>
+                </div>
+            </div>
+            <div class="flex items-center gap-2 w-full sm:w-auto justify-end">
+                <button onclick="dismissAppBanner()"
+                    class="text-xs text-blue-200 hover:text-white px-2.5 py-1.5 font-medium transition-colors">Maybe
+                    Later</button>
+                <a href="#"
+                    class="text-xs bg-emerald-500 hover:bg-emerald-600 text-white font-black px-4 py-1.5 rounded-lg shadow-sm transition-all text-center">
+                    Download App
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <header
+        class="sticky top-0 z-40 backdrop-blur-md bg-white/90 border-b border-slate-200 px-4 py-4 sm:px-8 shadow-sm">
         <div class="max-w-6xl mx-auto flex justify-between items-center">
             <div class="flex items-center gap-3">
                 <img src="./public/logo-laser.png" alt="AltSpend Logo Mark"
@@ -26,13 +51,19 @@
             </div>
 
             <div class="flex items-center gap-3">
-                <span class="hidden sm:inline-flex text-xs bg-slate-100 border border-slate-200 text-slate-600 px-3 py-1.5 rounded-full font-medium items-center gap-2">
+                <span
+                    class="hidden sm:inline-flex text-xs bg-slate-100 border border-slate-200 text-slate-600 px-3 py-1.5 rounded-full font-medium items-center gap-2">
                     <span class="h-2 w-2 rounded-full bg-emerald-500 animate-pulse"></span> Mobile Ready Core
                 </span>
-                <button onclick="toggleAuthModal()"
-                    class="text-xs bg-blue-600 text-white font-bold px-5 py-2.5 rounded-xl hover:bg-blue-700 transition-all shadow-md shadow-blue-600/20">
-                    Sign In
-                </button>
+
+                <!-- Seamless White-Blend WhatsApp Button Variant -->
+                <a href="https://wa.me/YOUR_BOT_NUMBER?text=Hello%20AltSpend!%20I%20want%20to%20audit%20a%20product%20link."
+                    target="_blank"
+                    class="text-xs bg-white text-emerald-600 border border-emerald-200 hover:border-emerald-400 hover:bg-emerald-50/30 font-bold px-4 py-2.5 rounded-xl transition-all shadow-sm flex items-center gap-2 group">
+                    <img src="./public/whatsapp.png" alt="WhatsApp Icon"
+                        class="h-4 w-4 object-contain transition-transform group-hover:scale-110 mix-blend-multiply">
+                    <span>WhatsApp Bot</span>
+                </a>
             </div>
         </div>
     </header>
@@ -40,27 +71,57 @@
     <!-- Main Grid Workspace -->
     <main class="max-w-6xl mx-auto px-4 pt-6 pb-24 md:px-8 grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
 
-        <!-- DYNAMIC MIDDLE COLUMN: Target container for your modular JavaScript layout -->
+        <!-- DYNAMIC MIDDLE COLUMN -->
         <div id="financeFormContainer" class="order-1 lg:order-2 lg:col-span-7 w-full space-y-4">
             <!-- JavaScript components will automatically build this area dynamically -->
         </div>
 
-        <!-- INFO SIDEBAR: Pushed down to Order-2 on mobile, returns to left panel on Desktop (lg:order-1) -->
+        <!-- INFO SIDEBAR -->
         <div class="order-2 lg:order-1 lg:col-span-5 space-y-6 lg:sticky lg:top-24">
-            
+
             <div class="space-y-3">
-                <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold bg-blue-50 text-blue-600 border border-blue-200">
+                <span
+                    class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold bg-blue-50 text-blue-600 border border-blue-200">
                     ⚡ Zero Privacy Intrusion
                 </span>
                 <h1 class="text-3xl sm:text-4xl font-black text-slate-900 tracking-tight leading-tight">
                     Reveal the hidden costs of <span class="text-blue-600">No-Cost EMIs</span> instantly.
                 </h1>
                 <p class="text-slate-600 text-sm leading-relaxed font-medium">
-                    Paste any product checkout link from Amazon or Flipkart below. Our engine breaks open upfront merchant discounts, hidden GST compounding, and card reward tradeoffs.
+                    Paste any product checkout link from Amazon or Flipkart below. Our engine breaks open upfront
+                    merchant discounts, hidden GST compounding, and card reward tradeoffs.
                 </p>
             </div>
 
-            <div class="p-4 rounded-2xl bg-white border border-slate-200 flex items-center justify-between gap-3 shadow-sm hover:border-blue-300 transition-colors cursor-pointer">
+            <!-- REQUIREMENT 2: Dedicated Credit Card EMI Advertisement Section -->
+            <div
+                class="bg-gradient-to-br from-slate-900 to-blue-950 text-white rounded-2xl p-5 space-y-4 shadow-xl relative overflow-hidden border border-slate-800">
+                <div class="absolute -right-6 -bottom-6 w-32 h-32 bg-blue-600/20 rounded-full blur-xl"></div>
+                <div class="flex justify-between items-start">
+                    <div>
+                        <span
+                            class="text-[9px] bg-blue-500/30 text-blue-300 font-extrabold px-2 py-0.5 rounded border border-blue-500/20 uppercase tracking-wider">Partner
+                            Offer</span>
+                        <h3 class="text-sm font-black mt-2 tracking-tight">Maximize EMI Rewards</h3>
+                        <p class="text-[11px] text-slate-300 font-medium mt-0.5">Get flat 5% cashback + absolute zero
+                            processing fees on platform card splits.</p>
+                    </div>
+                    <span class="text-2xl">💳</span>
+                </div>
+                <div class="bg-white/5 border border-white/10 rounded-xl p-2.5 flex items-center justify-between gap-2">
+                    <div>
+                        <p class="text-[10px] text-slate-400 font-bold">RECOMMENDED CARD</p>
+                        <p class="text-xs font-extrabold text-emerald-400">AltSpend Credit Card Suite</p>
+                    </div>
+                    <a href="#"
+                        class="text-[10px] font-black bg-blue-600 hover:bg-blue-700 text-white px-3 py-2 rounded-lg transition-all shadow-md">
+                        Apply Now
+                    </a>
+                </div>
+            </div>
+
+            <div
+                class="p-4 rounded-2xl bg-white border border-slate-200 flex items-center justify-between gap-3 shadow-sm hover:border-blue-300 transition-colors cursor-pointer">
                 <div class="flex items-center gap-3">
                     <img src="./public/logo-ribbon.png" alt="AltSpend Extension" class="h-10 w-10 object-contain">
                     <div>
@@ -68,84 +129,110 @@
                         <p class="text-[11px] text-slate-500 font-medium">Audit pricing right on checkout pages.</p>
                     </div>
                 </div>
-                <button class="text-[11px] font-bold bg-slate-100 hover:bg-slate-200 text-slate-800 px-4 py-2 rounded-lg whitespace-nowrap transition-all border border-slate-200">
+                <button
+                    class="text-[11px] font-bold bg-slate-100 hover:bg-slate-200 text-slate-800 px-4 py-2 rounded-lg whitespace-nowrap transition-all border border-slate-200">
                     Get Addon
                 </button>
             </div>
 
-            <div class="bg-white border border-rose-200 rounded-2xl p-4 sm:p-5 space-y-4 shadow-sm relative overflow-hidden">
+            <!-- DAILY HOT DEALS SECTION -->
+            <div
+                class="bg-white border border-rose-200 rounded-2xl p-4 sm:p-5 space-y-4 shadow-sm relative overflow-hidden">
                 <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-rose-400 to-orange-400"></div>
-                <div class="flex justify-between items-center">
+
+                <div class="flex justify-between items-center mb-1">
                     <h3 class="text-sm font-bold text-slate-900 flex items-center gap-2">
-                        <span class="text-rose-500 text-lg">🔥</span> Daily Hot Deals
+                        <span class="text-lg">🔥</span>
+                        <span>Daily Hot Deals</span>
                     </h3>
-                    <span class="text-[10px] text-rose-600 font-bold bg-rose-50 px-2 py-0.5 rounded border border-rose-100">Live Offers</span>
+                    <span
+                        class="text-[10px] bg-rose-50 text-rose-600 border border-rose-100 font-bold px-2 py-0.5 rounded">Live
+                        Offers</span>
                 </div>
-                
-                <div class="grid grid-cols-2 gap-3">
-                    <div class="group cursor-pointer border border-slate-100 rounded-xl p-2 hover:border-rose-300 hover:shadow-md transition-all bg-slate-50">
-                        <div class="h-24 bg-white rounded-lg mb-2 flex items-center justify-center overflow-hidden border border-slate-100 relative">
-                            <span class="text-xs text-slate-400 font-medium">Image</span>
-                            <div class="absolute top-1 left-1 bg-rose-500 text-white text-[9px] font-bold px-1.5 py-0.5 rounded">-15%</div>
+
+                <!-- REQUIREMENT 4: Configured Grid for Multiple Product Deal Rows -->
+                <div class="space-y-3">
+                    <!-- Row 1 -->
+                    <div class="grid grid-cols-2 gap-3">
+                        <div
+                            class="group cursor-pointer border border-slate-100 rounded-xl p-2 hover:border-rose-300 hover:shadow-md transition-all bg-slate-50">
+                            <div
+                                class="h-24 bg-white rounded-lg mb-2 flex items-center justify-center overflow-hidden border border-slate-100 relative">
+                                <span class="text-xs text-slate-400 font-medium">Image</span>
+                                <div
+                                    class="absolute top-1 left-1 bg-rose-500 text-white text-[9px] font-bold px-1.5 py-0.5 rounded">
+                                    -15%</div>
+                            </div>
+                            <p class="text-[11px] font-bold text-slate-800 truncate">iPhone 15 Pro (256GB)</p>
+                            <p class="text-[10px] text-emerald-600 font-bold mt-0.5">Optimal EMI: ₹5,416/mo</p>
                         </div>
-                        <p class="text-[11px] font-bold text-slate-800 truncate">iPhone 15 Pro (256GB)</p>
-                        <p class="text-[10px] text-emerald-600 font-bold mt-0.5">Optimal EMI: ₹5,416/mo</p>
+
+                        <div
+                            class="group cursor-pointer border border-slate-100 rounded-xl p-2 hover:border-rose-300 hover:shadow-md transition-all bg-slate-50">
+                            <div
+                                class="h-24 bg-white rounded-lg mb-2 flex items-center justify-center overflow-hidden border border-slate-100 relative">
+                                <span class="text-xs text-slate-400 font-medium">Image</span>
+                                <div
+                                    class="absolute top-1 left-1 bg-rose-500 text-white text-[9px] font-bold px-1.5 py-0.5 rounded">
+                                    -12%</div>
+                            </div>
+                            <p class="text-[11px] font-bold text-slate-800 truncate">MacBook Air M3</p>
+                            <p class="text-[10px] text-emerald-600 font-bold mt-0.5">Optimal EMI: ₹7,890/mo</p>
+                        </div>
                     </div>
-                    
-                    <div class="group cursor-pointer border border-slate-100 rounded-xl p-2 hover:border-rose-300 hover:shadow-md transition-all bg-slate-50">
-                        <div class="h-24 bg-white rounded-lg mb-2 flex items-center justify-center overflow-hidden border border-slate-100 relative">
-                            <span class="text-xs text-slate-400 font-medium">Image</span>
+
+                    <!-- Row 2 (Added 1 More Row for Daily Hot Deals) -->
+                    <div class="grid grid-cols-2 gap-3">
+                        <div
+                            class="group cursor-pointer border border-slate-100 rounded-xl p-2 hover:border-rose-300 hover:shadow-md transition-all bg-slate-50">
+                            <div
+                                class="h-24 bg-white rounded-lg mb-2 flex items-center justify-center overflow-hidden border border-slate-100 relative">
+                                <span class="text-xs text-slate-400 font-medium">Image</span>
+                                <div
+                                    class="absolute top-1 left-1 bg-rose-500 text-white text-[9px] font-bold px-1.5 py-0.5 rounded">
+                                    -20%</div>
+                            </div>
+                            <p class="text-[11px] font-bold text-slate-800 truncate">Sony WH-1000XM5</p>
+                            <p class="text-[10px] text-emerald-600 font-bold mt-0.5">Optimal EMI: ₹2,100/mo</p>
                         </div>
-                        <p class="text-[11px] font-bold text-slate-800 truncate">MacBook Air M3</p>
-                        <p class="text-[10px] text-emerald-600 font-bold mt-0.5">Optimal EMI: ₹7,890/mo</p>
+
+                        <div
+                            class="group cursor-pointer border border-slate-100 rounded-xl p-2 hover:border-rose-300 hover:shadow-md transition-all bg-slate-50">
+                            <div
+                                class="h-24 bg-white rounded-lg mb-2 flex items-center justify-center overflow-hidden border border-slate-100 relative">
+                                <span class="text-xs text-slate-400 font-medium">Image</span>
+                                <div
+                                    class="absolute top-1 left-1 bg-rose-500 text-white text-[9px] font-bold px-1.5 py-0.5 rounded">
+                                    -8%</div>
+                            </div>
+                            <p class="text-[11px] font-bold text-slate-800 truncate">iPad Air M2</p>
+                            <p class="text-[10px] text-emerald-600 font-bold mt-0.5">Optimal EMI: ₹4,299/mo</p>
+                        </div>
                     </div>
                 </div>
             </div>
 
-            <div class="bg-white border border-slate-200 rounded-2xl p-4 sm:p-5 space-y-4 shadow-sm">
-                <div class="flex justify-between items-center">
-                    <div>
-                        <h3 class="text-sm font-bold text-slate-900 flex items-center gap-2">
-                            <span class="text-blue-500">👤</span> Affordability Vector
-                        </h3>
-                        <p class="text-[11px] text-slate-500 font-medium mt-0.5">Filter limits over platform EMI schedules.</p>
-                    </div>
-                </div>
+            <!-- REQUIREMENT 5: "Affordability Vector" element block has been fully removed from here -->
 
-                <div class="grid grid-cols-2 gap-3">
-                    <div>
-                        <label class="block text-[11px] text-slate-600 font-bold mb-1">Monthly In-Hand</label>
-                        <input id="userIncome" type="number" placeholder="e.g. 125000"
-                            class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2.5 text-xs text-slate-900 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all font-medium">
-                    </div>
-                    <div>
-                        <label class="block text-[11px] text-slate-600 font-bold mb-1">Active EMIs</label>
-                        <input id="userCurrentEmi" type="number" placeholder="e.g. 15000"
-                            class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2.5 text-xs text-slate-900 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all font-medium">
-                    </div>
-                </div>
-            </div>
         </div>
-
     </main>
 
-    <!-- Authentication Modal -->
-    <div id="authModal" class="fixed inset-0 z-50 hidden items-center justify-center bg-slate-900/40 backdrop-blur-sm p-4">
-        <div class="bg-white border border-slate-200 max-w-sm w-full rounded-3xl p-6 relative shadow-2xl space-y-4">
-            <button onclick="toggleAuthModal()" class="absolute top-4 right-4 text-slate-400 hover:text-slate-800 font-bold text-sm bg-slate-100 rounded-full w-6 h-6 flex items-center justify-center">✕</button>
-            <div class="text-center space-y-1">
-                <h3 class="text-lg font-black text-slate-900">Member Features</h3>
-                <p class="text-xs text-slate-500 font-medium">Unlock Phase 4 calculations and multi-card tracking profiles.</p>
-            </div>
-            <div class="space-y-2.5 pt-2">
-                <input type="email" placeholder="Enter email address"
-                    class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-sm text-slate-900 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 font-medium">
-                <button class="w-full bg-blue-600 text-white font-bold py-3 rounded-xl text-sm shadow-md hover:bg-blue-700 transition-all">
-                    Send Magic Link
-                </button>
-            </div>
-        </div>
-    </div>
+    <!-- UI Interaction Scripts -->
+    <script>
+        // Trigger Mobile App Download Prompt On Load 
+        window.addEventListener('DOMContentLoaded', () => {
+            // Verify device layout viewports before displaying to prevent desktop noise
+            if (window.innerWidth < 1024) {
+                const banner = document.getElementById('mobileAppBanner');
+                if (banner) banner.classList.remove('hidden');
+            }
+        });
+
+        function dismissAppBanner() {
+            const banner = document.getElementById('mobileAppBanner');
+            if (banner) banner.classList.add('hidden');
+        }
+    </script>
 
     <!-- WIRE UP COMPLETE MODULAR COMPONENT SCRIPTS (ORDER MATTERS) -->
     <script src="./src/util/api.js"></script>
@@ -153,4 +240,5 @@
     <script src="./src/components/AuditCard.js"></script>
     <script src="./src/views/HomeView.js"></script>
 </body>
+
 </html>

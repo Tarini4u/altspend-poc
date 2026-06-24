@@ -1,11 +1,11 @@
 window.FinanceFormComponent = {
     render: function() {
         return `
-            <div id="dynamicCampaignTicker" class="w-full bg-gradient-to-r from-amber-500 to-orange-600 text-white px-4 py-3 rounded-2xl shadow-md flex items-center gap-3 text-xs sm:text-sm font-bold animate-pulse">
-                <span class="text-base sm:text-lg">⏰</span>
+            <div id="dynamicCampaignTicker" class="w-full bg-slate-100 border border-slate-200 text-slate-700 px-4 py-3 rounded-2xl shadow-sm flex items-center gap-3 text-xs sm:text-sm font-bold transition-all duration-300">
+                <span id="hotDealsEmoji" class="text-base sm:text-lg">🔥</span>
                 <div class="flex-1 truncate">
-                    <span class="uppercase tracking-wider bg-white/20 px-2 py-0.5 rounded text-[10px] mr-2">Hot Deal Event</span>
-                    <span id="campaignMessage">Amazon Prime Day starts in 2 Days! Check your EMI options now.</span>
+                    <span id="hotDealsBadge" class="uppercase tracking-wider bg-slate-200 text-slate-600 px-2 py-0.5 rounded text-[10px] mr-2 font-black border border-slate-300">Live Offers</span>
+                    <span id="campaignMessage" class="text-slate-800">Checking for live marketplace events...</span>
                 </div>
             </div>
 
@@ -20,16 +20,8 @@ window.FinanceFormComponent = {
                     </div>
                 </div>
 
-                <div id="apiResultWrapper" class="relative min-h-[300px] bg-slate-50 border border-slate-200 rounded-2xl p-4 sm:p-6 flex flex-col justify-center">
+                <div id="apiResultWrapper" class="hidden relative min-h-[250px] bg-slate-50 border border-slate-200 rounded-2xl p-4 sm:p-6 flex flex-col justify-center transition-all duration-300">
                     
-                    <div id="stateEmpty" class="text-center py-8 space-y-3">
-                        <div class="mx-auto w-14 h-14 rounded-full bg-white border border-slate-200 flex items-center justify-center text-2xl shadow-sm text-slate-400">🔍</div>
-                        <div class="space-y-1">
-                            <h4 class="text-sm font-bold text-slate-800">Awaiting Product Link</h4>
-                            <p class="text-xs text-slate-500 max-w-sm mx-auto font-medium leading-relaxed">Paste a product shopping link above to uncover processing fees, hidden interest, and real cash discounts.</p>
-                        </div>
-                    </div>
-
                     <div id="stateLoading" class="hidden text-center py-12 space-y-4">
                         <div class="mx-auto w-10 h-10 border-4 border-blue-100 border-t-blue-600 rounded-full animate-spin"></div>
                         <div class="space-y-1">
@@ -47,21 +39,47 @@ window.FinanceFormComponent = {
                                 <img id="metaProductPhoto" src="" alt="Product Photo Asset" class="w-16 h-16 object-contain rounded-lg bg-slate-50 border border-slate-150 flex-shrink-0">
                                 <div class="flex-1 min-w-0">
                                     <h3 id="metaProductName" class="text-sm font-bold text-slate-900 line-clamp-2 leading-tight">Loading Title Matrix...</h3>
-                                    <div class="mt-1">
-                                        <span class="text-[10px] text-slate-400 font-bold uppercase tracking-wide block">Sticker Price</span>
-                                        <p id="metaStickerPrice" class="text-base font-black text-slate-900">₹0</p>
+                                    
+                                    <div class="mt-2 space-y-0.5">
+                                        <p id="metaLowestEmi" class="text-sm font-black text-blue-600">₹0/mo</p>
+                                        <p class="text-[10px] text-slate-400 font-bold uppercase tracking-wide">
+                                            Sticker Price: <span id="metaStickerPrice" class="text-slate-800 font-black normal-case text-xs">₹0</span>
+                                        </p>
                                     </div>
                                 </div>
                             </div>
                         </div>
 
                         <div class="space-y-3">
-                            <h4 class="text-xs font-bold text-slate-500 uppercase tracking-wide">Best EMI options</h4>
-                            <div id="emiCardsContainer" class="flex flex-col gap-2.5">
-                                </div>
+                            <h4 class="text-xs font-bold text-slate-500 uppercase tracking-wide">Best Bank Cards EMI Options</h4>
+                            <div id="emiCardsContainer" class="flex flex-col gap-2.5"></div>
                         </div>
                     </div>
+                </div>
+            </div>
 
+            <div id="pricingModal" class="hidden fixed inset-0 bg-slate-900/60 backdrop-blur-xs z-50 items-center justify-center p-4 transition-all duration-300">
+                <div class="bg-white rounded-3xl max-w-2xl w-full p-5 sm:p-6 shadow-2xl relative space-y-5 border border-slate-100 transform scale-100 transition-all duration-300">
+                    
+                    <button onclick="window.closePricingModal()" class="absolute top-4 right-4 w-7 h-7 flex items-center justify-center rounded-full bg-slate-50 border border-slate-200 text-slate-400 hover:text-slate-600 font-bold transition-all text-xs">
+                        ✕
+                    </button>
+
+                    <div class="space-y-1 pr-6">
+                        <h3 id="popBankName" class="text-sm font-black text-slate-900">Bank Calculations</h3>
+                        <p id="popStrategy" class="text-[11px] font-bold text-slate-400 uppercase tracking-wider">Strategy Terms Profile</p>
+                    </div>
+
+                    <div id="popBreakdownContent" class="text-xs font-medium overflow-hidden"></div>
+
+                    <div class="grid grid-cols-2 gap-3 pt-2">
+                        <a id="affiliateBuyBtn" href="#" target="_blank" class="bg-slate-900 hover:bg-slate-800 text-white font-bold text-center py-3.5 rounded-xl transition-all text-xs shadow-md shadow-slate-900/10 block">
+                            🛒 Buy Product
+                        </a>
+                        <a id="bankApplyCardBtn" href="#" target="_blank" class="bg-blue-600 hover:bg-blue-700 text-white font-bold text-center py-3.5 rounded-xl transition-all text-xs shadow-md shadow-blue-600/10 block">
+                            💳 Apply for Card
+                        </a>
+                    </div>
                 </div>
             </div>
         `;
