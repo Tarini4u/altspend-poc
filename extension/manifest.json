@@ -10,9 +10,10 @@
     "http://127.0.0.1:8000/*"
   ],
   "icons": {
-    "16": "logo-laser.png",
-    "48": "logo-laser.png",
-    "128": "logo-laser.png"
+    "16": "icons/logo-light-16.png",
+    "32": "icons/logo-light-32.png",
+    "48": "icons/logo-light-48.png",
+    "128": "icons/logo-light-128.png"
   },
   "action": {
     "default_popup": "popup.html",
@@ -20,8 +21,13 @@
   },
   "content_scripts": [
     {
-      "matches": ["*://*.amazon.in/*", "*://*.flipkart.com/*"],
-      "js": ["content.js"]
+      "matches": [
+        "*://*.amazon.in/*",
+        "*://*.flipkart.com/*"
+      ],
+      "js": [
+        "content.js"
+      ]
     }
   ]
 }
