@@ -1,41 +1,226 @@
 <!DOCTYPE html>
 <html>
+
 <head>
   <meta charset="UTF-8">
   <style>
     body {
-      width: 350px;
-      font-family: sans-serif;
-      background-color: #0b0f19;
-      color: #f8fafc;
+      width: 360px;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background-color: #f8fafc;
+      /* Slate-50 background match */
+      color: #0f172a;
+      /* Slate-900 typography */
       margin: 0;
       padding: 16px;
+      box-sizing: border-box;
     }
-    .brand {
-      font-weight: bold;
-      color: #ffffff;
+
+    .header-container {
+      display: flex;
+      align-items: center;
+      gap: 10px;
       margin-bottom: 12px;
     }
-    .brand span { color: #a3e635; }
-    .btn {
-      background: linear-gradient(to right, #a3e635, #34d399);
-      color: #020617;
-      border: none;
-      padding: 10px;
-      width: 100%;
-      border-radius: 8px;
-      font-weight: bold;
-      cursor: pointer;
+
+    .logo-img {
+      width: 26px;
+      height: 26px;
+      object-fit: contain;
+      border-radius: 6px;
+      border: 1px solid #e2e8f0;
+      background-color: #ffffff;
     }
-    #status { font-size: 12px; color: #94a3b8; margin-top: 10px; }
+
+    .brand {
+      font-size: 16px;
+      font-weight: 800;
+      color: #0f172a;
+      letter-spacing: -0.025em;
+    }
+
+    .brand span {
+      color: #2563eb;
+      /* Custom Brand Blue Color */
+    }
+
+    .description {
+      font-size: 12px;
+      color: #475569;
+      /* Slate-600 */
+      font-weight: 500;
+      line-height: 1.5;
+      margin: 0 0 16px 0;
+    }
+
+    .btn {
+      background-color: #2563eb;
+      /* Brand Blue */
+      color: #ffffff;
+      border: none;
+      padding: 10px 16px;
+      width: 100%;
+      border-radius: 10px;
+      font-weight: 700;
+      font-size: 13px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      box-shadow: 0 4px 6px -1px rgba(37, 99, 235, 0.15);
+    }
+
+    .btn:hover {
+      background-color: #1d4ed8;
+      /* Deepening shade on hover state */
+    }
+
+    #status {
+      font-size: 11px;
+      color: #64748b;
+      /* Slate-500 text placement */
+      margin-top: 12px;
+      font-weight: 500;
+      text-align: center;
+    }
+
+    /* Core Structural Styles for incoming API payload layouts */
+    .result-box {
+      margin-top: 14px;
+      background-color: #ffffff;
+      border: 1px solid #e2e8f0;
+      /* Slate-200 */
+      border-radius: 12px;
+      padding: 14px;
+      box-shadow: 0 1px 3px rgba(15, 23, 42, 0.03);
+      text-align: left;
+    }
+
+    .result-title {
+      font-size: 10px;
+      font-weight: 800;
+      color: #94a3b8;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 10px;
+    }
+
+    .price-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 8px;
+    }
+
+    .price-label {
+      font-size: 13px;
+      color: #334155;
+      font-weight: 600;
+    }
+
+    .price-value {
+      font-size: 15px;
+      font-weight: 800;
+      color: #0f172a;
+    }
+
+    .success-msg {
+      font-size: 11px;
+      color: #15803d;
+      /* Emerald-700 alignment */
+      font-weight: 600;
+      line-height: 1.4;
+      margin-top: 10px;
+      background-color: #f0fdf4;
+      border: 1px solid #bbf7d0;
+      padding: 8px 10px;
+      border-radius: 8px;
+    }
+
+    /* EMI Table Styling */
+    .matrix-container {
+      margin-top: 14px;
+    }
+
+    .emi-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 8px;
+      background-color: #ffffff;
+      border: 1px solid #e2e8f0;
+      border-radius: 8px;
+      overflow: hidden;
+      /* Keeps borders rounded */
+      font-size: 11px;
+    }
+
+    .emi-table th {
+      background-color: #f1f5f9;
+      color: #475569;
+      font-weight: 700;
+      text-align: left;
+      padding: 8px 10px;
+      border-bottom: 1px solid #e2e8f0;
+      text-transform: uppercase;
+      font-size: 9px;
+      letter-spacing: 0.05em;
+    }
+
+    .emi-table td {
+      padding: 10px;
+      border-bottom: 1px solid #f1f5f9;
+      color: #334155;
+      vertical-align: middle;
+    }
+
+    .emi-table tr:last-child td {
+      border-bottom: none;
+    }
+
+    .tenure-cell {
+      font-weight: 700;
+      color: #0f172a;
+    }
+
+    .leakage-text {
+      color: #df2c2c;
+      /* Alert red for hidden fees */
+      font-weight: 600;
+    }
+
+    .effective-price {
+      font-weight: 800;
+      color: #0f172a;
+    }
+
+    .badge {
+      display: inline-block;
+      padding: 2px 6px;
+      font-size: 9px;
+      font-weight: 700;
+      border-radius: 4px;
+      margin-top: 2px;
+    }
+
+    .badge-alert {
+      background-color: #fef2f2;
+      color: #dc2626;
+      border: 1px solid #fee2e2;
+    }
   </style>
 </head>
+
 <body>
-  <div class="brand">AltSpend<span>.com</span> Mini</div>
-  <p style="font-size: 12px; color: #94a3b8;">Audit this active product tab context instantly.</p>
+
+  <div class="header-container">
+    <img src="logo-laser.png" alt="AltSpend Logo" class="logo-img">
+    <div class="brand">AltSpend<span>.com</span> Mini</div>
+  </div>
+
+  <p class="description">Audit this active product tab context instantly.</p>
   <button id="auditBtn" class="btn">Analyze This Product Page</button>
+
   <div id="status">Ready to audit...</div>
 
   <script src="popup.js"></script>
 </body>
+
 </html>
