@@ -1,29 +1,36 @@
 {
   "manifest_version": 3,
-  "name": "AltSpend — True No-Cost EMI Optimizer",
+  "name": "AltSpend",
   "version": "1.0",
-  "description": "Instantly audits upfront discount tricks and hidden interest GST loops at checkout pages.",
+  "description": "Smart finance tracker and hidden cost calculator.",
   "permissions": [
-    "activeTab"
+    "activeTab",
+    "scripting"
   ],
   "host_permissions": [
-    "http://127.0.0.1:8000/*"
+    "https://*.amazon.in/*",
+    "https://*.flipkart.com/*"
   ],
-  "icons": {
-    "16": "icons/logo-light-16.png",
-    "32": "icons/logo-light-32.png",
-    "48": "icons/logo-light-48.png",
-    "128": "icons/logo-light-128.png"
-  },
   "action": {
     "default_popup": "popup.html",
-    "default_icon": "logo-laser.png"
+    "default_icon": {
+      "16": "logo-laser.png",
+      "32": "logo-laser.png",
+      "48": "logo-laser.png",
+      "128": "logo-laser.png"
+    }
+  },
+  "icons": {
+    "16": "logo-laser.png",
+    "32": "logo-laser.png",
+    "48": "logo-laser.png",
+    "128": "logo-laser.png"
   },
   "content_scripts": [
     {
       "matches": [
-        "*://*.amazon.in/*",
-        "*://*.flipkart.com/*"
+        "https://*.amazon.in/*",
+        "https://*.flipkart.com/*"
       ],
       "js": [
         "content.js"
